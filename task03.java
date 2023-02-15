@@ -1,8 +1,14 @@
 
-// 3. Реализовать простой калькулятор
+/* 3. Реализовать простой калькулятор
+Реализация через парсинг выражения. Функционал - базовый )) - нет скобок, нет возможности обработки отрицательных значений
+*/
+import java.util.Scanner;
 public class task03 {
     public static void main(String[] args) {
-        String expr = "7+2*2-9*2/4-2";
+        Scanner myScanner = new Scanner(System.in);
+        System.out.println("Введите простое математическое выражение: ");
+        String expr = myScanner.nextLine();
+        myScanner.close();
         expr = expr.trim();
         expr = expr.replace(" ", "");
         expr = expr.replace("+", " + ");
@@ -10,7 +16,8 @@ public class task03 {
         expr = expr.replace("*", " * ");
         expr = expr.replace("/", " / ");
         String result = calc(expr);
-        System.out.println(result);
+        
+        System.out.printf("Ответ: %s\n",result);
 
     }
 
@@ -20,106 +27,59 @@ public class task03 {
                 || expression.contains("/"))) {
             return expression;
         }
+
         if (expression.contains("*")) {
-            expression = expression.trim();
-            String left = "";
-            String right = "";
             int index = expression.indexOf("*");
-            String leftPart = expression.substring(0, index - 1);
-            String rightPart = expression.substring(index + 2, expression.length());
-            if (leftPart.contains(" ")) {
-                left = leftPart.substring(leftPart.lastIndexOf(" ") + 1, leftPart.length());
-                leftPart = leftPart.substring(0, leftPart.lastIndexOf(" "));
-            } else {
-                left = leftPart;
-                leftPart = "";
-            }
-            if (rightPart.contains(" ")) {
-                right = rightPart.substring(0, rightPart.indexOf(" "));
-                rightPart = rightPart.substring(rightPart.indexOf(" ") + 1, rightPart.length());
-            } else {
-                right = rightPart;
-                rightPart = "";
-            }
-            String midle = String.valueOf(Double.parseDouble(left) * Double.parseDouble(right));
-            expression = String.format("%s %s %s", leftPart, midle, rightPart);
+            String [] expressionParts = parseExpression(expression,index);
+            String midle = String.valueOf(Double.parseDouble(expressionParts[1]) * Double.parseDouble(expressionParts[2]));
+            expression = String.format("%s %s %s", expressionParts[0], midle, expressionParts[3]);
+            expression = expression.trim();
             return calc(expression);
         }
         if (expression.contains("/")) {
-            expression = expression.trim();
-            String left = "";
-            String right = "";
             int index = expression.indexOf("/");
-            String leftPart = expression.substring(0, index - 1);
-            String rightPart = expression.substring(index + 2, expression.length());
-            if (leftPart.contains(" ")) {
-                left = leftPart.substring(leftPart.lastIndexOf(" ") + 1, leftPart.length());
-                leftPart = leftPart.substring(0, leftPart.lastIndexOf(" "));
-            } else {
-                left = leftPart;
-                leftPart = "";
-            }
-            if (rightPart.contains(" ")) {
-                right = rightPart.substring(0, rightPart.indexOf(" "));
-                rightPart = rightPart.substring(rightPart.indexOf(" ") + 1, rightPart.length());
-            } else {
-                right = rightPart;
-                rightPart = "";
-            }
-            String midle = String.valueOf(Double.parseDouble(left) / Double.parseDouble(right));
-            expression = String.format("%s %s %s", leftPart, midle, rightPart);
+            String [] expressionParts = parseExpression(expression,index);
+            String midle = String.valueOf(Double.parseDouble(expressionParts[1]) / Double.parseDouble(expressionParts[2]));
+            expression = String.format("%s %s %s", expressionParts[0], midle, expressionParts[3]);
+            expression = expression.trim();
             return calc(expression);
         }
         if (expression.contains("+")) {
-            expression = expression.trim();
-            String left = "";
-            String right = "";
             int index = expression.indexOf("+");
-            String leftPart = expression.substring(0, index - 1);
-            String rightPart = expression.substring(index + 2, expression.length());
-            if (leftPart.contains(" ")) {
-                left = leftPart.substring(leftPart.lastIndexOf(" ") + 1, leftPart.length());
-                leftPart = leftPart.substring(0, leftPart.lastIndexOf(" "));
-            } else {
-                left = leftPart;
-                leftPart = "";
-            }
-            if (rightPart.contains(" ")) {
-                right = rightPart.substring(0, rightPart.indexOf(" "));
-                rightPart = rightPart.substring(rightPart.indexOf(" ") + 1, rightPart.length());
-            } else {
-                right = rightPart;
-                rightPart = "";
-            }
-            String midle = String.valueOf(Double.parseDouble(left) + Double.parseDouble(right));
-            expression = String.format("%s %s %s", leftPart, midle, rightPart);
+            String [] expressionParts = parseExpression(expression,index);
+            String midle = String.valueOf(Double.parseDouble(expressionParts[1]) + Double.parseDouble(expressionParts[2]));
+            expression = String.format("%s %s %s", expressionParts[0], midle, expressionParts[3]);
+            expression = expression.trim();
             return calc(expression);
         }
         if (expression.contains("-")) {
-            expression = expression.trim();
-            String left = "";
-            String right = "";
             int index = expression.indexOf("-");
-            String leftPart = expression.substring(0, index - 1);
-            String rightPart = expression.substring(index + 2, expression.length());
-            if (leftPart.contains(" ")) {
-                left = leftPart.substring(leftPart.lastIndexOf(" ") + 1, leftPart.length());
-                leftPart = leftPart.substring(0, leftPart.lastIndexOf(" "));
-            } else {
-                left = leftPart;
-                leftPart = "";
-            }
-            if (rightPart.contains(" ")) {
-                right = rightPart.substring(0, rightPart.indexOf(" "));
-                rightPart = rightPart.substring(rightPart.indexOf(" ") + 1, rightPart.length());
-            } else {
-                right = rightPart;
-                rightPart = "";
-            }
-            String midle = String.valueOf(Double.parseDouble(left) - Double.parseDouble(right));
-            expression = String.format("%s %s %s", leftPart, midle, rightPart);
+            String [] expressionParts = parseExpression(expression,index);
+            String midle = String.valueOf(Double.parseDouble(expressionParts[1]) - Double.parseDouble(expressionParts[2]));
+            expression = String.format("%s %s %s", expressionParts[0], midle, expressionParts[3]);
+            expression = expression.trim();
             return calc(expression);
         }
         return expression;
+    }
+    public static String[] parseExpression(String expression, int signIndex) {
+        String[]expressionParts = new String[4];
+            expressionParts[0] = expression.substring(0, signIndex - 1);
+            expressionParts[3] = expression.substring(signIndex + 2, expression.length());
+            if (expressionParts[0].contains(" ")) {
+                expressionParts[1] = expressionParts[0].substring(expressionParts[0].lastIndexOf(" ") + 1, expressionParts[0].length());
+                expressionParts[0] = expressionParts[0].substring(0, expressionParts[0].lastIndexOf(" "));
+            } else {
+                expressionParts[1] = expressionParts[0];
+                expressionParts[0] = "";
+            }
+            if (expressionParts[3].contains(" ")) {
+                expressionParts[2] = expressionParts[3].substring(0, expressionParts[3].indexOf(" "));
+                expressionParts[3] = expressionParts[3].substring(expressionParts[3].indexOf(" ") + 1, expressionParts[3].length());
+            } else {
+                expressionParts[2] = expressionParts[3];
+                expressionParts[3] = "";
+            }
+        return expressionParts;
     }
 }
