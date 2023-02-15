@@ -5,6 +5,11 @@ import java.util.ArrayList;
  */
 public class task02 {
     public static void main(String[] args) {
+        /*
+         * Если число не делится на просты числа, меньшие его, значит оно простое
+         * Очередное найденное простое число вносится в список simplesArray (ArrayList здесь удобнее Array)
+         * При проверке очередного числа проверяется его делимость на предыдущие, занесённые в simplesArray
+         */
         int target = 1000;
         ArrayList<Integer> simplesArray = new ArrayList<Integer>(1);
         for (int i = 3; i < target; i += 2) {
