@@ -1,20 +1,28 @@
+
 /*
  * 1. Вычислить n-ое треугольного число(сумма чисел от 1 до n), n!
 (произведение чисел от 1 до n)
+коммент для внесения изменений в ветку github_checkout
  */
+import java.util.Scanner;
+
 public class task01 {
     public static void main(String[] args) { // треугольное число и факториал циклом
-        int number = 4;
+        Scanner myScanner = new Scanner(System.in);
+        System.out.println("Введите целое положительное число: ");
+        int number = Integer.valueOf(myScanner.nextLine());
+        // int number = 4;
+        myScanner.close();
         int triangle = 0;
         int factorial = 1;
         for (int i = 1; i < number + 1; i++) {
             triangle += i;
             factorial *= i;
         }
-        System.out.println(triangle);
-        System.out.println(triangleRec(number));
-        System.out.println(factorial);
-        System.out.println(factorialRec(number));
+        System.out.printf("%d - е треугольное число: %d\n",number, triangle);
+        System.out.printf("%d - е треугольное число (рассчитанное рекурсивно): %d\n",number,triangleRec(number));
+        System.out.printf("Факториал %d: %d\n",number, factorial);
+        System.out.printf("Факториал %d (рассчитанный рекурсивно): %d\n",number, factorialRec(number));
 
     }
 
